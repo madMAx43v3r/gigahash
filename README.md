@@ -58,6 +58,41 @@ The entrypoint supervises the selected miner and restarts it 10 seconds after
 an unexpected exit. `--restart unless-stopped` in the run examples starts the
 container again after a host reboot or Docker daemon restart.
 
+## Run on Vast.ai
+
+The public image can run directly from a custom
+[Vast.ai template](https://cloud.vast.ai/templates/). Configure the template
+with these values:
+
+| Setting | Value |
+| --- | --- |
+| Image Path:Tag | `ghcr.io/madmax43v3r/gigahash:latest` |
+| Launch Mode | `docker ENTRYPOINT` |
+| Entrypoint Arguments | `zk` or `ai` |
+| Ports | None |
+| Docker Repository Authentication | None |
+
+Add these rows in the template's **Environment Variables** table:
+
+| Variable | Value |
+| --- | --- |
+| `PAYOUT_ADDRESS` | Your NOCK payout address (required) |
+| `WORKER_NAME` | A unique worker name, such as `vast-zk-1` |
+
+Select an `amd64` offer with `cuda_max_good >= 12.9`. Use a Turing-or-newer
+GPU for ZK mining or an Ampere-or-newer GPU for AI mining. Vast.ai assigns the
+rented GPU to the container automatically, so no Docker GPU option is needed.
+
+Use an on-demand instance when uninterrupted uptime matters; interruptible
+instances may be paused. The image does not include SSH or Jupyter, so inspect
+miner output through the instance logs. A successful test should show a pool
+connection followed by at least one accepted share.
+
+The `latest` tag follows the newest release. Replace it with a versioned tag,
+such as `1.3`, when you need a reproducible deployment. Vast.ai's SSH and
+Jupyter launch modes replace the image entrypoint, so use `docker ENTRYPOINT`
+unless you arrange to start the miner separately.
+
 ## Configuration
 
 | Variable | Meaning |
