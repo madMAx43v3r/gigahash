@@ -4,9 +4,6 @@ Official runtime image for the gigahash.cloud public NOCK mining pool. One
 image contains both the ZK and AI CUDA miners; select the miner with the `zk`
 or `ai` command.
 
-The image is runtime-only. It contains no wallet, node, source tree, compiler,
-CUDA toolkit, Rust toolchain, or build cache.
-
 ## Requirements
 
 - Linux x86-64
@@ -71,7 +68,6 @@ container again after a host reboot or Docker daemon restart.
 | `INSTANCES` | Optional instances-per-GPU override |
 | `DEVICE` | Use one container-visible CUDA device |
 | `DEVICES` | Comma-separated container-visible CUDA device list |
-| `AI_DENSE_K` | AI-only dense dimension override (`1024` or `2048`) |
 | `PUZZLE` | Alternative to the command: `zk` or `ai` |
 | `RESTART_DELAY_SECONDS` | Miner crash-restart delay; defaults to `10` |
 | `LOG_FILE` | Optional absolute path receiving a copy of miner output |
