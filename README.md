@@ -15,10 +15,11 @@ or `ai` command.
 ## Pull the image
 
 ```bash
-docker pull ghcr.io/madmax43v3r/gigahash:1.3
+docker pull ghcr.io/madmax43v3r/gigahash:latest
 ```
 
-Versioned tags are recommended for production. The examples below use `1.3`.
+The `latest` tag follows the newest release. Pin a versioned tag when you need
+a reproducible deployment.
 
 ## Run the ZK miner
 
@@ -29,7 +30,7 @@ docker run -d \
   --gpus all \
   -e PAYOUT_ADDRESS=YOUR_NOCK_ADDRESS \
   -e WORKER_NAME=rig-1 \
-  ghcr.io/madmax43v3r/gigahash:1.3 zk
+  ghcr.io/madmax43v3r/gigahash:latest zk
 ```
 
 ## Run the AI miner
@@ -41,7 +42,7 @@ docker run -d \
   --gpus all \
   -e PAYOUT_ADDRESS=YOUR_NOCK_ADDRESS \
   -e WORKER_NAME=rig-1 \
-  ghcr.io/madmax43v3r/gigahash:1.3 ai
+  ghcr.io/madmax43v3r/gigahash:latest ai
 ```
 
 The miners connect to the gigahash.cloud public pool through the built-in DNS
@@ -88,10 +89,8 @@ instances may be paused. The image does not include SSH or Jupyter, so inspect
 miner output through the instance logs. A successful test should show a pool
 connection followed by at least one accepted share.
 
-The `latest` tag follows the newest release. Replace it with a versioned tag,
-such as `1.3`, when you need a reproducible deployment. Vast.ai's SSH and
-Jupyter launch modes replace the image entrypoint, so use `docker ENTRYPOINT`
-unless you arrange to start the miner separately.
+Vast.ai's SSH and Jupyter launch modes replace the image entrypoint, so use
+`docker ENTRYPOINT` unless you arrange to start the miner separately.
 
 ## Configuration
 
@@ -115,7 +114,7 @@ For example, to connect through a local proxy:
 ```bash
 docker run --rm --gpus all \
   --network host \
-  ghcr.io/madmax43v3r/gigahash:1.3 zk \
+  ghcr.io/madmax43v3r/gigahash:latest zk \
   --server 127.0.0.1:9200 \
   --payout-address YOUR_NOCK_ADDRESS \
   --worker-name rig-1
@@ -129,7 +128,7 @@ Prefer Docker's GPU selection when a container should see only part of a host:
 docker run --rm \
   --gpus '"device=0,1"' \
   -e PAYOUT_ADDRESS=YOUR_NOCK_ADDRESS \
-  ghcr.io/madmax43v3r/gigahash:1.3 zk
+  ghcr.io/madmax43v3r/gigahash:latest zk
 ```
 
 Device numbers passed to `DEVICE` or `DEVICES` refer to the devices visible
@@ -147,7 +146,7 @@ docker run -d \
   --log-opt max-size=50m \
   --log-opt max-file=3 \
   -e PAYOUT_ADDRESS=YOUR_NOCK_ADDRESS \
-  ghcr.io/madmax43v3r/gigahash:1.3 zk
+  ghcr.io/madmax43v3r/gigahash:latest zk
 ```
 
 To additionally write a host-visible log file, mount a directory and set
@@ -161,7 +160,7 @@ docker run -d \
   -v /var/log/gigahash:/logs \
   -e LOG_FILE=/logs/miner.log \
   -e PAYOUT_ADDRESS=YOUR_NOCK_ADDRESS \
-  ghcr.io/madmax43v3r/gigahash:1.3 ai
+  ghcr.io/madmax43v3r/gigahash:latest ai
 ```
 
 The mounted file is appended across miner and container restarts. Configure
@@ -172,11 +171,11 @@ host-side rotation for it if persistent file logging is enabled.
 Version commands do not require GPU access:
 
 ```bash
-docker run --rm ghcr.io/madmax43v3r/gigahash:1.3 zk --version
-docker run --rm ghcr.io/madmax43v3r/gigahash:1.3 ai --version
+docker run --rm ghcr.io/madmax43v3r/gigahash:latest zk --version
+docker run --rm ghcr.io/madmax43v3r/gigahash:latest ai --version
 ```
 
-Both commands should report version `1.3`.
+Both commands should report the current release version.
 
 Pool status and account statistics are available at
 [gigahash.cloud](https://gigahash.cloud/).
