@@ -1,8 +1,8 @@
 # gigahash.cloud NOCK miners
 
 Official runtime image for the [gigahash.cloud](https://gigahash.cloud/) public NOCK mining pool. One
-image contains both the ZK and AI CUDA miners; select the miner with the `zk`
-or `ai` command.
+image contains both the ZK and AI CUDA miners; select `zk`, `ai`, or the
+profitability-switching `auto` mode.
 
 ## Requirements
 
@@ -11,6 +11,7 @@ or `ai` command.
 - NVIDIA driver compatible with CUDA 12.9
 - NVIDIA Turing or newer for ZK mining
 - NVIDIA Ampere or newer for AI mining
+- NVIDIA Ampere or newer for auto mode
 
 ## Pull the image
 
@@ -45,14 +46,38 @@ docker run -d \
   ghcr.io/madmax43v3r/gigahash:latest ai
 ```
 
+## Switch automatically by profitability
+
+```bash
+docker run -d \
+  --name gigahash-auto \
+  --restart unless-stopped \
+  --gpus all \
+  -e PAYOUT_ADDRESS=YOUR_NOCK_ADDRESS \
+  -e WORKER_NAME=rig-1 \
+  ghcr.io/madmax43v3r/gigahash:latest auto
+```
+
+Auto mode starts the miner with the higher current RTX 5090 profitability
+reported by the pool API. It checks again every 60 seconds and switches only
+when the other puzzle is more than 5% better than the running puzzle. If the
+API is unavailable, it keeps the running miner; on a first start without API
+data it falls back to ZK.
+
+Add `-e AUTO_HYSTERESIS_PERCENT=10` to the Docker command to use a 10%
+switching threshold instead.
+
 The miners connect to the gigahash.cloud public pool through the built-in DNS
 defaults. No pool server option is required.
+In auto mode, leave `SERVER` unset unless the override is a shared proxy
+endpoint that accepts both ZK and AI miners.
 
 Follow the miner output with:
 
 ```bash
 docker logs -f gigahash-zk
 docker logs -f gigahash-ai
+docker logs -f gigahash-auto
 ```
 
 The entrypoint supervises the selected miner and restarts it 10 seconds after
@@ -69,7 +94,7 @@ with these values:
 | --- | --- |
 | Image Path:Tag | `ghcr.io/madmax43v3r/gigahash:latest` |
 | Launch Mode | `docker ENTRYPOINT` |
-| Entrypoint Arguments | `zk` or `ai` |
+| Entrypoint Arguments | `zk`, `ai`, or `auto` |
 | Ports | None |
 | Docker Repository Authentication | None |
 
@@ -79,6 +104,7 @@ Add these rows in the template's **Environment Variables** table:
 | --- | --- |
 | `PAYOUT_ADDRESS` | Your NOCK payout address (required) |
 | `WORKER_NAME` | Optional override; omit it to use the Vast.ai instance ID |
+| `AUTO_HYSTERESIS_PERCENT` | Optional auto-mode switching threshold; defaults to `5` |
 
 Do not add `WORKER_NAME` when you want the Vast.ai instance ID as the worker
 name. The image detects it automatically. Add `WORKER_NAME` only to override
@@ -106,12 +132,16 @@ Vast.ai's SSH and Jupyter launch modes replace the image entrypoint, so use
 | `INSTANCES` | Optional instances-per-GPU override |
 | `DEVICE` | Use one container-visible CUDA device |
 | `DEVICES` | Comma-separated container-visible CUDA device list |
-| `PUZZLE` | Alternative to the command: `zk` or `ai` |
+| `PUZZLE` | Alternative to the command: `zk`, `ai`, or `auto` |
+| `AUTO_HYSTERESIS_PERCENT` | Auto-mode switching threshold from `0` to `100`; defaults to `5` |
+| `AUTO_POLL_SECONDS` | Auto-mode profitability polling interval; defaults to `60` |
+| `AUTO_PROFITABILITY_URL` | Auto-mode pool profitability endpoint override |
 | `RESTART_DELAY_SECONDS` | Miner crash-restart delay; defaults to `10` |
 | `LOG_FILE` | Optional absolute path receiving a copy of miner output |
 
-Miner command-line options may also be placed after `zk` or `ai`. Explicit
+Miner command-line options may also be placed after the mode. Explicit
 command-line options take precedence over their environment-variable form.
+In auto mode, use `AI_DENSE_K` instead of the AI-only `--dense-k` option.
 
 For example, to connect through a local proxy:
 
