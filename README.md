@@ -1,6 +1,6 @@
 # gigahash.cloud NOCK miners
 
-Official runtime image for the gigahash.cloud public NOCK mining pool. One
+Official runtime image for the [gigahash.cloud](https://gigahash.cloud/) public NOCK mining pool. One
 image contains both the ZK and AI CUDA miners; select the miner with the `zk`
 or `ai` command.
 
