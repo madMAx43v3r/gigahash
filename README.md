@@ -78,7 +78,11 @@ Add these rows in the template's **Environment Variables** table:
 | Variable | Value |
 | --- | --- |
 | `PAYOUT_ADDRESS` | Your NOCK payout address (required) |
-| `WORKER_NAME` | A unique worker name, such as `vast-zk-1` |
+| `WORKER_NAME` | Optional override; omit it to use the Vast.ai instance ID |
+
+Do not add `WORKER_NAME` when you want the Vast.ai instance ID as the worker
+name. The image detects it automatically. Add `WORKER_NAME` only to override
+that default.
 
 Select an `amd64` offer with `cuda_max_good >= 12.9`. Use a Turing-or-newer
 GPU for ZK mining or an Ampere-or-newer GPU for AI mining. Vast.ai assigns the
@@ -97,7 +101,7 @@ Vast.ai's SSH and Jupyter launch modes replace the image entrypoint, so use
 | Variable | Meaning |
 | --- | --- |
 | `PAYOUT_ADDRESS` | Required NOCK payout address |
-| `WORKER_NAME` | Pool-visible worker name; defaults to the container hostname |
+| `WORKER_NAME` | Pool-visible worker name; defaults to the Vast.ai instance ID when available, otherwise the container hostname |
 | `SERVER` | Optional pool or proxy endpoint override |
 | `INSTANCES` | Optional instances-per-GPU override |
 | `DEVICE` | Use one container-visible CUDA device |
