@@ -58,11 +58,13 @@ docker run -d \
   ghcr.io/madmax43v3r/gigahash:latest auto
 ```
 
-Auto mode starts the miner with the higher current RTX 5090 profitability
-reported by the pool API. It checks again every 60 seconds and switches only
-when the other puzzle is more than 5% better than the running puzzle. If the
-API is unavailable, it keeps the running miner; on a first start without API
-data it falls back to ZK.
+Auto mode detects the installed GPU models and sends them to the pool API. The
+API classifies them by NVIDIA architecture series and compares ZK and AI using
+the measured profile for that series. It checks again every 60 seconds and
+switches only when the other puzzle is more than 5% better than the running
+puzzle. If model detection fails, the API uses its backward-compatible RTX 5090
+profile. If the API is unavailable, it keeps the running miner; on a first start
+without API data it falls back to ZK.
 
 Add `-e AUTO_HYSTERESIS_PERCENT=10` to the Docker command to use a 10%
 switching threshold instead.
