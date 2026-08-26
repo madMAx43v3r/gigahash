@@ -145,7 +145,6 @@ Vast.ai's SSH and Jupyter launch modes replace the image entrypoint, so use
 
 Miner command-line options may also be placed after the mode. Explicit
 command-line options take precedence over their environment-variable form.
-In auto mode, use `AI_DENSE_K` instead of the AI-only `--dense-k` option.
 
 For example, to connect through a local proxy:
 
