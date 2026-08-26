@@ -70,7 +70,9 @@ Add `-e AUTO_HYSTERESIS_PERCENT=10` to the Docker command to use a 10%
 switching threshold instead.
 
 The miners connect to the gigahash.cloud public pool through the built-in DNS
-defaults. No pool server option is required.
+defaults. No pool server option is required. For a specific pool host,
+`--server HOST` defaults to port `9100` for ZK and `9101` for AI. To connect
+through a standalone proxy, use `--proxy HOST`; its default port is `9200`.
 In auto mode, leave `SERVER` unset unless the override is a shared proxy
 endpoint that accepts both ZK and AI miners.
 
@@ -151,7 +153,7 @@ For example, to connect through a local proxy:
 docker run --rm --gpus all \
   --network host \
   ghcr.io/madmax43v3r/gigahash:latest zk \
-  --server 127.0.0.1:9200 \
+  --proxy 127.0.0.1 \
   --payout-address YOUR_NOCK_ADDRESS \
   --worker-name rig-1
 ```
