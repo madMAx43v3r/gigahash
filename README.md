@@ -126,6 +126,27 @@ connection followed by at least one accepted share.
 Vast.ai's SSH and Jupyter launch modes replace the image entrypoint, so use
 `docker ENTRYPOINT` unless you arrange to start the miner separately.
 
+## Run on HiveOS
+
+Gigahash ships separate HiveOS custom-miner packages for ZK and AI. In a
+Flight Sheet, select **Configure in miner**, choose **Custom**, and use these
+values:
+
+| Setting | ZK | AI |
+| --- | --- | --- |
+| Miner name | `gigahash-zk` | `gigahash-ai` |
+| Installation URL | `https://cdn.gigahash.cloud/releases/1.6/hiveos/gigahash-zk-1.6.tar.gz` | `https://cdn.gigahash.cloud/releases/1.6/hiveos/gigahash-ai-1.6.tar.gz` |
+| Hash algorithm | `nock-zk` | `nock-ai` |
+| Wallet and worker template | `%WAL%` | `%WAL%` |
+| Pool URL | `server.gigahash.cloud:9100` | `server.gigahash.cloud:9101` |
+| Pass | `x` | `x` |
+
+The package uses the Hive rig name as the pool worker name and reports
+per-GPU rate, temperature, fan, power, uptime, and share counters to HiveOS.
+ZK rates are reported in `kproof/s`; AI rates are reported directly in
+`TMAC/s`. Optional miner arguments can be entered under **Extra config
+arguments**.
+
 ## Configuration
 
 | Variable | Meaning |
@@ -133,6 +154,7 @@ Vast.ai's SSH and Jupyter launch modes replace the image entrypoint, so use
 | `PAYOUT_ADDRESS` | Required NOCK payout address |
 | `WORKER_NAME` | Pool-visible worker name; defaults to the Vast.ai instance ID when available, otherwise the container hostname |
 | `SERVER` | Optional pool or proxy endpoint override |
+| `STATS_FILE` | Optional path for atomically updated five-second JSON miner stats |
 | `INSTANCES` | Optional instances-per-GPU override |
 | `DEVICE` | Use one container-visible CUDA device |
 | `DEVICES` | Comma-separated container-visible CUDA device list |
@@ -156,6 +178,14 @@ docker run --rm --gpus all \
   --payout-address YOUR_NOCK_ADDRESS \
   --worker-name rig-1
 ```
+
+## Machine-readable stats
+
+Both native miners accept `--stats-file PATH`; the container maps the same
+option from `STATS_FILE`. The file is replaced atomically every five seconds
+and contains the miner version, puzzle, uptime, share counters, total rate,
+and per-GPU rate and hardware telemetry. ZK `hashrate` values are proofs per
+second. AI `hashrate` values are TMAC/s and carry `"hashrate_unit":"TMAC/s"`.
 
 ## Select GPUs
 
