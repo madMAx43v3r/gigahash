@@ -142,7 +142,7 @@ values:
 
 The package uses the Hive rig name as the pool worker name and reports
 per-GPU rate, temperature, fan, power, uptime, and share counters to HiveOS.
-ZK rates are reported in `kproof/s`; AI rates are reported directly in
+ZK rates are reported in `proof/s`; AI rates are reported directly in
 `TMAC/s`. Optional miner arguments can be entered under **Extra config
 arguments**.
 
