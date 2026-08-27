@@ -138,7 +138,7 @@ values:
 | Installation URL | `https://cdn.gigahash.cloud/releases/1.6/hiveos/gigahash-zk-1.6.tar.gz` | `https://cdn.gigahash.cloud/releases/1.6/hiveos/gigahash-ai-1.6.tar.gz` |
 | Hash algorithm | `nock-zk` | `nock-ai` |
 | Wallet and worker template | `%WAL%` | `%WAL%` |
-| Pool URL | `server.gigahash.cloud:9100` | `server.gigahash.cloud:9101` |
+| Pool URL | Leave empty | Leave empty |
 | Pass | `x` | `x` |
 
 The package uses the Hive rig name as the pool worker name and reports
