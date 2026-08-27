@@ -139,7 +139,6 @@ values:
 | Hash algorithm | `nock-zk` | `nock-ai` |
 | Wallet and worker template | `%WAL%` | `%WAL%` |
 | Pool URL | Leave empty | Leave empty |
-| Pass | `x` | `x` |
 
 The package uses the Hive rig name as the pool worker name and reports
 per-GPU rate, temperature, fan, power, uptime, and share counters to HiveOS.
