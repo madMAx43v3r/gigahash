@@ -166,6 +166,9 @@ arguments**.
 
 Miner command-line options may also be placed after the mode. Explicit
 command-line options take precedence over their environment-variable form.
+The ZK miner's optional `--low-cpu` mode combines CUDA launches and uses larger
+work chunks to reduce host CPU usage at the cost of additional VRAM and, with
+multiple instances, potentially a small throughput reduction.
 
 For example, to connect through a local proxy:
 
