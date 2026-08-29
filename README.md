@@ -136,7 +136,6 @@ values:
 | --- | --- | --- |
 | Miner name | `gigahash-zk` | `gigahash-ai` |
 | Installation URL | `https://cdn.gigahash.cloud/hiveos/gigahash-zk-latest.tar.gz` | `https://cdn.gigahash.cloud/hiveos/gigahash-ai-latest.tar.gz` |
-| Hash algorithm | `zkpow` | `aipow` |
 | Wallet and worker template | `%WAL%` | `%WAL%` |
 | Pool URL | `server.gigahash.cloud` | `server.gigahash.cloud` |
 | Pass | `x` | `x` |
