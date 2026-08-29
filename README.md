@@ -140,6 +140,23 @@ values:
 | Pool URL | `server.gigahash.cloud` | `server.gigahash.cloud` |
 | Pass | `x` | `x` |
 
+HiveOS caches custom miners by their installation URL. When using the stable
+`latest` URL, force a reinstall after a new Gigahash release:
+
+```bash
+/hive/miners/custom/custom-get https://cdn.gigahash.cloud/hiveos/gigahash-zk-latest.tar.gz -f
+```
+
+For the AI miner, replace `gigahash-zk-latest.tar.gz` with
+`gigahash-ai-latest.tar.gz`. As an alternative, use an immutable versioned URL
+in the Flight Sheet; changing the version installs it separately without a
+forced reinstall:
+
+```text
+https://cdn.gigahash.cloud/releases/2.0/hiveos/gigahash-zk-2.0.tar.gz
+https://cdn.gigahash.cloud/releases/2.0/hiveos/gigahash-ai-2.0.tar.gz
+```
+
 The package uses the Hive rig name as the pool worker name and reports
 per-GPU rate, temperature, fan, power, uptime, and share counters to HiveOS.
 ZK rates are reported in `proof/s`; AI rates are reported directly in
