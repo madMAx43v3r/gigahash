@@ -136,9 +136,9 @@ values:
 | --- | --- | --- |
 | Miner name | `gigahash-zk` | `gigahash-ai` |
 | Installation URL | `https://cdn.gigahash.cloud/releases/2.0/hiveos/gigahash-zk-2.0.tar.gz` | `https://cdn.gigahash.cloud/releases/2.0/hiveos/gigahash-ai-2.0.tar.gz` |
-| Hash algorithm | `nock-zk` | `nock-ai` |
+| Hash algorithm | `zkpow` | `nock-ai` |
 | Wallet and worker template | `%WAL%` | `%WAL%` |
-| Pool URL | Leave empty | Leave empty |
+| Pool URL | `server.gigahash.cloud` | `server.gigahash.cloud` |
 
 The package uses the Hive rig name as the pool worker name and reports
 per-GPU rate, temperature, fan, power, uptime, and share counters to HiveOS.
