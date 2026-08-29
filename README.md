@@ -135,7 +135,7 @@ values:
 | Setting | ZK | AI |
 | --- | --- | --- |
 | Miner name | `gigahash-zk` | `gigahash-ai` |
-| Installation URL | `https://cdn.gigahash.cloud/releases/1.6/hiveos/gigahash-zk-1.6.tar.gz` | `https://cdn.gigahash.cloud/releases/1.6/hiveos/gigahash-ai-1.6.tar.gz` |
+| Installation URL | `https://cdn.gigahash.cloud/releases/2.0/hiveos/gigahash-zk-2.0.tar.gz` | `https://cdn.gigahash.cloud/releases/2.0/hiveos/gigahash-ai-2.0.tar.gz` |
 | Hash algorithm | `nock-zk` | `nock-ai` |
 | Wallet and worker template | `%WAL%` | `%WAL%` |
 | Pool URL | Leave empty | Leave empty |
