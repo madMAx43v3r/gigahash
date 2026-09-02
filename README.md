@@ -3,7 +3,8 @@
 Official runtime images for the [gigahash.cloud](https://gigahash.cloud/)
 public NOCK mining pool. The default NVIDIA image contains the ZK and AI CUDA
 miners; select `zk`, `ai`, or the profitability-switching `auto` mode. A
-separate AMD image provides ZK mining on supported RDNA 3 and RDNA 4 GPUs.
+separate AMD image provides ZK mining on supported Radeon RX 6000, 7000, and
+9000 series GPUs.
 
 ## Requirements
 
@@ -17,8 +18,7 @@ separate AMD image provides ZK mining on supported RDNA 3 and RDNA 4 GPUs.
 For AMD ZK mining:
 
 - Linux x86-64 with the AMDGPU kernel driver
-- AMD RDNA 3 (`gfx1100`, `gfx1101`, or `gfx1102`) or RDNA 4 (`gfx1200` or
-  `gfx1201`) GPU
+- AMD Radeon RX 6000, 7000, or 9000 series GPU
 - Docker access to `/dev/kfd` and `/dev/dri`
 
 The AMD miner carries its required HIP/ROCm runtime inside the binary. Do not
@@ -51,7 +51,7 @@ docker run -d \
   ghcr.io/madmax43v3r/gigahash:latest zk
 ```
 
-AMD RDNA 3/4:
+AMD Radeon RX 6000/7000/9000 series:
 
 ```bash
 docker run -d \
