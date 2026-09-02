@@ -1,8 +1,9 @@
 # gigahash.cloud NOCK miners
 
-Official runtime image for the [gigahash.cloud](https://gigahash.cloud/) public NOCK mining pool. One
-image contains both the ZK and AI CUDA miners; select `zk`, `ai`, or the
-profitability-switching `auto` mode.
+Official runtime images for the [gigahash.cloud](https://gigahash.cloud/)
+public NOCK mining pool. The default NVIDIA image contains the ZK and AI CUDA
+miners; select `zk`, `ai`, or the profitability-switching `auto` mode. A
+separate AMD image provides ZK mining on RDNA 4 GPUs.
 
 ## Requirements
 
@@ -13,6 +14,15 @@ profitability-switching `auto` mode.
 - NVIDIA Ampere or newer for AI mining
 - NVIDIA Ampere or newer for auto mode
 
+For AMD ZK mining:
+
+- Linux x86-64 with the AMDGPU kernel driver
+- AMD RDNA 4 GPU
+- Docker access to `/dev/kfd` and `/dev/dri`
+
+The AMD miner carries its required HIP/ROCm runtime inside the binary. Do not
+install ROCm user-space packages on the mining host.
+
 ## Pull the image
 
 ```bash
@@ -21,6 +31,12 @@ docker pull ghcr.io/madmax43v3r/gigahash:latest
 
 The `latest` tag follows the newest release. Pin a versioned tag when you need
 a reproducible deployment.
+
+For AMD ZK mining, pull the separate image:
+
+```bash
+docker pull ghcr.io/madmax43v3r/gigahash:amd-latest
+```
 
 ## Run the ZK miner
 
@@ -32,6 +48,21 @@ docker run -d \
   -e PAYOUT_ADDRESS=YOUR_NOCK_ADDRESS \
   -e WORKER_NAME=rig-1 \
   ghcr.io/madmax43v3r/gigahash:latest zk
+```
+
+AMD RDNA 4:
+
+```bash
+docker run -d \
+  --name gigahash-zk-amd \
+  --restart unless-stopped \
+  --device=/dev/kfd \
+  --device=/dev/dri \
+  --group-add video \
+  --group-add render \
+  -e PAYOUT_ADDRESS=YOUR_NOCK_ADDRESS \
+  -e WORKER_NAME=rig-1 \
+  ghcr.io/madmax43v3r/gigahash:amd-latest
 ```
 
 ## Run the AI miner
