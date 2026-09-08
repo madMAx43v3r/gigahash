@@ -158,6 +158,30 @@ connection followed by at least one accepted share.
 Vast.ai's SSH and Jupyter launch modes replace the image entrypoint, so use
 `docker ENTRYPOINT` unless you arrange to start the miner separately.
 
+### Update existing Vast.ai instances
+
+[`vastai_update.py`](vastai_update.py) safely recycles running instances that
+already use `ghcr.io/madmax43v3r/gigahash:latest`. It handles one instance at
+a time and waits until the replacement worker is visible, mining, and has all
+expected GPUs online before touching the next instance. It never changes the
+instance configuration and stops if an instance fails its readiness check.
+
+Install and authenticate the Vast.ai CLI, then preview the selected instances:
+
+```bash
+python3 vastai_update.py
+```
+
+Apply the rolling update only after checking the preview:
+
+```bash
+python3 vastai_update.py --apply
+```
+
+Use `--instance ID` to update selected instances or `--expect-version VERSION`
+to require a specific replacement miner version. Run `python3 vastai_update.py
+--help` for timeout, image, pool API, and CLI overrides.
+
 ## Run on HiveOS
 
 Gigahash ships separate HiveOS custom-miner packages for ZK and AI. In a
